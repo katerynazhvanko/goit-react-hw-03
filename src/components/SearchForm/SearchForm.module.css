@@ -1,0 +1,12 @@
+.form {
+  display: flex;
+  flex-direction: row;
+  width: 350px;
+  margin-bottom: 50px;
+}
+.field {
+  height: 40px;
+  width: 100%;
+  border: 1px solid #333333;
+  border-radius: 5px;
+}
