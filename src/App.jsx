@@ -1,55 +1,60 @@
-import { useState, useId } from "react";
-import users from "./components/ContactList/users.json";
+import { useState } from "react";
+import inititalState from "./users.json";
 
-import ContactForm from "./components/ContactForm/ContactForm";
+// import ContactForm from "./components/ContactForm/ContactForm";
 import ContactList from "./components/ContactList/ContactList";
 import SearchForm from "./components/SearchForm/SearchForm";
 
 export default function App() {
-  const initialValues = {
-    username: "",
-    number: "",
-  };
+  const [users, setUsers] = useState(inititalState);
+  // const [text, setText] = useState("");
+  const [filter, setFilter] = useState("");
+
+  const visibleContacts = users.filter((user) =>
+    user.name.toLowerCase().includes(filter.toLowerCase())
+  );
+
+  // const initialValues = {
+  //   username: "",
+  //   number: "",
+  // };
 
   // для пошуку
-  const [inputValue, setInputValue] = useState("");
+  // const [inputValue, setInputValue] = useState("");
 
-  const handleChange = (e) => {
-    setInputValue(e.target.value);
-  };
+  // const handleChange = (e) => {
+  //   setInputValue(e.target.value);
+  // };
   // ----
 
   // для форми контактів
-  const [values, setValues] = useState(initialValues);
+  // const [values, setValues] = useState(initialValues);
 
-  const handleFormChange = (e) => {
-    setValues({
-      ...values,
-      [e.target.name]: e.target.value,
-    });
-  };
+  // const handleFormChange = (e) => {
+  //   setValues({
+  //     ...values,
+  //     [e.target.name]: e.target.value,
+  //   });
+  // };
 
-  const handleSubmit = (values, actions) => {
-    console.log(values);
-    actions.resetForm();
-  };
-  const nameFieldId = useId();
-  const numberFieldId = useId();
+  // const handleSubmit = (values, actions) => {
+  //   console.log(values);
+  //   actions.resetForm();
+  // };
   // ----
 
   return (
     <>
       <h1>Phonebook</h1>
-      <ContactForm
+      {/* <ContactForm
         value={values}
         handleFormChange={handleFormChange}
         handleSubmit={handleSubmit}
-        idName={nameFieldId}
-        idNumber={numberFieldId}
-      />
+      /> */}
 
-      <SearchForm inputValue={inputValue} handleChange={handleChange} />
-      <ContactList users={users} />
+      <SearchForm value={filter} onFilter={setFilter} />
+      <p>{filter}</p>
+      <ContactList users={visibleContacts} />
     </>
   );
 }

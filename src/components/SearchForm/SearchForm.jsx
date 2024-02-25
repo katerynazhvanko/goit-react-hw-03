@@ -1,23 +1,20 @@
-import { Formik, Form, Field } from "formik";
+import { useId } from "react";
 import css from "./SearchForm.module.css";
 
-export default function SearchForm({ inputValue, handleChange }) {
+export default function SearchForm({ value, onFilter }) {
+  const searchId = useId();
   return (
-    <Formik>
-      <Form className={css.form}>
-        <div>
-          <label className={css.label}>Find contacts by name</label>
-          <Field
-            className={css.field}
-            value={inputValue}
-            onChange={() => {
-              handleChange;
-            }}
-          >
-            {inputValue}
-          </Field>
-        </div>
-      </Form>
-    </Formik>
+    <div>
+      <label className={css.label} htmlFor={searchId}>
+        Find contacts by name
+      </label>
+      <input
+        type="text"
+        name="search"
+        id={searchId}
+        value={value}
+        onChange={(e) => onFilter(e.target.value)}
+      />
+    </div>
   );
 }

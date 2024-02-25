@@ -1,14 +1,13 @@
+import { useId } from "react";
+
 import { Formik, Form, Field } from "formik";
 
 import css from "./ContactForm.module.css";
 
-export default function ContactForm(
-  values,
-  handleSubmit,
-  handleFormChange,
-  idName,
-  idNumber
-) {
+export default function ContactForm(values, handleSubmit, handleFormChange) {
+  const nameId = useId();
+  const numberId = useId();
+
   return (
     <Formik
       initialValues={{ values }}
@@ -21,21 +20,21 @@ export default function ContactForm(
     >
       <Form className={css.form}>
         <div>
-          <label htmlFor={idName} className={css.label}>
+          <label htmlFor={nameId} className={css.label}>
             Name
           </label>
           <Field
             type="text"
             name="username"
-            id={idName}
+            id={nameId}
             className={css.field}
           />
         </div>
         <div>
-          <label htmlFor={idNumber} className={css.label}>
+          <label htmlFor={numberId} className={css.label}>
             Number
           </label>
-          <Field type="tel" name="tel" id={idNumber} className={css.field} />
+          <Field type="tel" name="tel" id={numberId} className={css.field} />
         </div>
         <button type="submit" className={css.button}>
           Add contact
