@@ -1,60 +1,54 @@
-import { useState } from "react";
-import inititalState from "./users.json";
+import { useState, useEffect } from "react";
 
-// import ContactForm from "./components/ContactForm/ContactForm";
+import ContactForm from "./components/ContactForm/ContactForm";
 import ContactList from "./components/ContactList/ContactList";
 import SearchForm from "./components/SearchForm/SearchForm";
 
+const getInitialContacts = () => {
+  const savedContacts = window.localStorage.getItem("contacts");
+
+  return savedContacts !== null ? JSON.parse(savedContacts) : [];
+};
+
 export default function App() {
-  const [users, setUsers] = useState(inititalState);
-  // const [text, setText] = useState("");
+  const [contacts, setContacts] = useState(getInitialContacts);
   const [filter, setFilter] = useState("");
 
-  const visibleContacts = users.filter((user) =>
-    user.name.toLowerCase().includes(filter.toLowerCase())
+  // save in memory between reload page
+
+  useEffect(() => {
+    window.localStorage.setItem("contacts", JSON.stringify(contacts));
+  }, [contacts]);
+
+  //add components
+
+  const addContact = (newContact) => {
+    console.log(newContact);
+    setContacts((prevContacts) => {
+      return [...prevContacts, newContact];
+    });
+  };
+
+  // delete component
+
+  const deleteContact = (contactId) => {
+    console.log(contactId);
+    setContacts((prevContacts) => {
+      return prevContacts.filter((contact) => contact.id !== contactId);
+    });
+  };
+
+  // filter contacts
+  const visibleContacts = contacts.filter((contact) =>
+    contact.name.toLowerCase().includes(filter.toLowerCase())
   );
-
-  // const initialValues = {
-  //   username: "",
-  //   number: "",
-  // };
-
-  // для пошуку
-  // const [inputValue, setInputValue] = useState("");
-
-  // const handleChange = (e) => {
-  //   setInputValue(e.target.value);
-  // };
-  // ----
-
-  // для форми контактів
-  // const [values, setValues] = useState(initialValues);
-
-  // const handleFormChange = (e) => {
-  //   setValues({
-  //     ...values,
-  //     [e.target.name]: e.target.value,
-  //   });
-  // };
-
-  // const handleSubmit = (values, actions) => {
-  //   console.log(values);
-  //   actions.resetForm();
-  // };
-  // ----
 
   return (
     <>
       <h1>Phonebook</h1>
-      {/* <ContactForm
-        value={values}
-        handleFormChange={handleFormChange}
-        handleSubmit={handleSubmit}
-      /> */}
-
+      <ContactForm onAddContact={addContact} />
       <SearchForm value={filter} onFilter={setFilter} />
-      <p>{filter}</p>
-      <ContactList users={visibleContacts} />
+      <ContactList contacts={visibleContacts} onDeleteContact={deleteContact} />
     </>
   );
 }
