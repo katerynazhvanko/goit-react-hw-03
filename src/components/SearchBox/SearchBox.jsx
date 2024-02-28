@@ -1,7 +1,7 @@
 import { useId } from "react";
-import css from "./SearchForm.module.css";
+import css from "./SearchBox.module.css";
 
-export default function SearchForm({ value, onFilter }) {
+export default function SearchBox({ value, onFilter }) {
   const searchId = useId();
   return (
     <div className={css.form}>

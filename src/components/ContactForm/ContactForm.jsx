@@ -21,7 +21,6 @@ const ContactShema = Yup.object().shape({
 });
 
 const initialValue = {
-  id: nanoid(),
   name: "",
   number: "",
 };

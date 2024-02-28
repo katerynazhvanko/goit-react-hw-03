@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 import ContactForm from "./components/ContactForm/ContactForm";
 import ContactList from "./components/ContactList/ContactList";
-import SearchForm from "./components/SearchForm/SearchForm";
+import SearchBox from "./components/SearchBox/SearchBox";
 
 const getInitialContacts = () => {
   const savedContacts = window.localStorage.getItem("contacts");
@@ -32,7 +32,6 @@ export default function App() {
   // delete component
 
   const deleteContact = (contactId) => {
-    console.log(contactId);
     setContacts((prevContacts) => {
       return prevContacts.filter((contact) => contact.id !== contactId);
     });
@@ -47,7 +46,7 @@ export default function App() {
     <>
       <h1>Phonebook</h1>
       <ContactForm onAddContact={addContact} />
-      <SearchForm value={filter} onFilter={setFilter} />
+      <SearchBox value={filter} onFilter={setFilter} />
       <ContactList contacts={visibleContacts} onDeleteContact={deleteContact} />
     </>
   );

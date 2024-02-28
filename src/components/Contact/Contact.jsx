@@ -7,7 +7,7 @@ export default function Contact({
   onDeleteContact,
 }) {
   return (
-    <li className={css.contact} key={id}>
+    <li className={css.contact}>
       <div className={css.information}>
         <p className={css.name}>
           <BsFillPersonFill className={css.icon} />
